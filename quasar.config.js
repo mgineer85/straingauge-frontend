@@ -49,7 +49,7 @@ module.exports = configure(function (ctx) {
       // transpile: false,
       // publicPath: '/',
 
-      distDir: "../forcesensor-esp/data/q/",
+      distDir: "../straingauge-esp/data/q/",
 
       // Add dependencies for transpiling with Babel (Array of string/regex)
       // (from node_modules, which are by default not transpiled).
@@ -85,7 +85,7 @@ module.exports = configure(function (ctx) {
       proxy: {
         // proxy all requests starting with /api to jsonplaceholder
         "/": {
-          target: "http://sg-box",
+          target: "http://192.168.22.1",
           changeOrigin: true,
 
           // fix proxy not forwarding the disconnect since node 16

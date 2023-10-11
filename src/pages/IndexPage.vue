@@ -38,9 +38,9 @@ export default defineComponent({
         datasets: [
           {
             label:
-              this.configurationStore.config.loadcell.name +
+              this.configurationStore.config.sensor.name +
               " [" +
-              this.configurationStore.config.loadcell.displayunit +
+              this.configurationStore.config.sensor.displayunit +
               "]",
             unit: "test",
             backgroundColor: "#f87979",

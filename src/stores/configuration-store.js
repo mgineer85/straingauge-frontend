@@ -12,22 +12,25 @@ export const useConfigurationStore = defineStore("configuration-store", {
     config: {
       system: {
         hostname: null,
-
         wifi_ap_mode: null,
         wifi_ap_ssid: null,
         wifi_ap_password: null,
-
-        wifi_sta_ssid: null,
-        wifi_sta_password: null,
+        serial: null,
       },
-
-      loadcell: {
+      sensor: {
         name: null,
         serial: null,
         fullrange: null,
         sensitivity: null,
         zerobalance: null,
         displayunit: null,
+      },
+      adc: {
+        ldovoltage: null,
+        gain: null,
+        samplerate: null,
+        cali_offset: null,
+        cali_gain_factor: null,
       },
     },
 
