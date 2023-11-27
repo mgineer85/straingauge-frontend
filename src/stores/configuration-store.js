@@ -12,7 +12,6 @@ export const useConfigurationStore = defineStore("configuration-store", {
     config: {
       system: {
         hostname: null,
-        wifi_ap_mode: null,
         wifi_ap_ssid: null,
         wifi_ap_password: null,
         serial: null,
@@ -24,11 +23,13 @@ export const useConfigurationStore = defineStore("configuration-store", {
         sensitivity: null,
         zerobalance: null,
         displayunit: null,
+        digits: null,
       },
       adc: {
-        ldovoltage: null,
         gain: null,
-        samplerate: null,
+        mode: null,
+        datarate: null,
+        averagereadings: null,
         cali_offset: null,
         cali_gain_factor: null,
       },
@@ -54,7 +55,7 @@ export const useConfigurationStore = defineStore("configuration-store", {
           return res.json();
         })
         .then((json) => {
-          console.log("Checkout this JSON! ", json);
+          console.log("config received ", json);
           this.config = json;
 
           this.storeState = STATES.DONE;
@@ -82,7 +83,7 @@ export const useConfigurationStore = defineStore("configuration-store", {
           return res.json();
         })
         .then((json) => {
-          console.log("Checkout this JSON! ", json);
+          console.log("config received ", json);
           this.initStore(true);
         })
         .catch((err) => {

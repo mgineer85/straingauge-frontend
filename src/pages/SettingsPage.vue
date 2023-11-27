@@ -12,10 +12,6 @@
             v-model="configurationStore.config.system.hostname"
             label="hostname"
           />
-          <q-toggle
-            v-model="configurationStore.config.system.wifi_ap_mode"
-            label="ap mode"
-          ></q-toggle>
           <q-input
             type="text"
             v-model="configurationStore.config.system.wifi_ap_ssid"
@@ -67,6 +63,11 @@
             v-model="configurationStore.config.sensor.zerobalance"
             label="Zerobalance"
           />
+          <q-input
+            type="number"
+            v-model="configurationStore.config.sensor.digits"
+            label="Digits"
+          />
         </q-form>
       </q-card-section>
       <q-separator />
@@ -79,27 +80,33 @@
         Amplifier and ADC.
         <q-form action="/api/config/adc" method="post" class="q-gutter-md">
           <q-select
-            v-model="configurationStore.config.adc.ldovoltage"
-            :options="options_nau7802_ldovoltage"
-            label="Excitation Voltage"
+            v-model="configurationStore.config.adc.mode"
+            :options="options_ads1220_mode"
+            label="Operating Mode"
+            emit-value
+            map-options
+          />
+
+          <q-select
+            v-model="configurationStore.config.adc.datarate"
+            :options="options_ads1220_datarate"
+            label="Datarate"
             emit-value
             map-options
           />
 
           <q-select
             v-model="configurationStore.config.adc.gain"
-            :options="options_nau7802_gain"
+            :options="options_ads1220_gain"
             label="Preamplifier Gain"
             emit-value
             map-options
           />
 
-          <q-select
-            v-model="configurationStore.config.adc.samplerate"
-            :options="options_nau7802_samplerate"
-            label="Samplerate"
-            emit-value
-            map-options
+          <q-input
+            type="number"
+            v-model="configurationStore.config.adc.averagereadings"
+            label="Average readings (number of readings to average)"
           />
 
           <q-input
@@ -183,48 +190,24 @@ export default defineComponent({
     const configurationStore = useConfigurationStore();
     const knownValue = ref(null);
 
-    /*! excitation voltages */
-    const options_nau7802_ldovoltage = [
+    /*! operation modes */
+    const options_ads1220_mode = [
       {
-        label: "4,5 V",
+        label: "Normal",
         value: 0,
       },
       {
-        label: "4,2 V",
+        label: "Duty Cycle",
         value: 1,
       },
       {
-        label: "3,9 V",
+        label: "Turbo",
         value: 2,
-      },
-      {
-        label: "3,6 V",
-        value: 3,
-      },
-      {
-        label: "3,3 V",
-        value: 4,
-      },
-      {
-        label: "3,0 V",
-        value: 5,
-      },
-      {
-        label: "2,7 V",
-        value: 6,
-      },
-      {
-        label: "2,4 V",
-        value: 7,
-      },
-      {
-        label: "external",
-        value: 8,
       },
     ];
 
     /*! The possible gains */
-    const options_nau7802_gain = [
+    const options_ads1220_gain = [
       {
         label: "1x",
         value: 0,
@@ -259,27 +242,37 @@ export default defineComponent({
       },
     ];
 
-    /*! The possible sample rates */
-    const options_nau7802_samplerate = [
+    /*! The possible datarates */
+    const options_ads1220_datarate = [
       {
-        label: "10 SPS",
+        label: "normal: 20, duty: 5, turbo: 40 SPS",
         value: 0,
       },
       {
-        label: "20 SPS",
+        label: "normal: 45, duty: 11, turbo: 90 SPS",
         value: 1,
       },
       {
-        label: "40 SPS",
+        label: "normal: 90, duty: 22, turbo: 180 SPS",
         value: 2,
       },
       {
-        label: "80 SPS",
+        label: "normal: 175, duty: 44, turbo: 350 SPS",
         value: 3,
       },
       {
-        label: "320 SPS",
-        value: 7,
+        label: "normal: 330, duty: 82, turbo: 660 SPS",
+        value: 4,
+      },
+
+      {
+        label: "normal: 600, duty: 150, turbo: 1200 SPS",
+        value: 5,
+      },
+
+      {
+        label: "normal: 1000, duty: 250, turbo: 2000 SPS",
+        value: 6,
       },
     ];
 
@@ -288,9 +281,9 @@ export default defineComponent({
       configurationStore,
       knownValue,
 
-      options_nau7802_ldovoltage,
-      options_nau7802_gain,
-      options_nau7802_samplerate,
+      options_ads1220_mode,
+      options_ads1220_gain,
+      options_ads1220_datarate,
     };
   },
 });

@@ -9,6 +9,11 @@
         <LineChart :chart-data="datasetsfull" />
         <div>
           Reading: <span id="reading">{{ this.store.reading }}</span> -
+          Reading_displayunit:
+          <span id="reading_displayunit">
+            {{ this.store.reading_displayunit }}
+            [{{ this.configurationStore.config.sensor.displayunit }}]
+          </span>
         </div>
       </q-card-section>
     </q-card>

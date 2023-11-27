@@ -58,14 +58,14 @@ export default defineComponent({
         .on("error", (err) =>
           console.error("Failed to parse or lost connection:", err)
         )
-        .on("force", (force) => {
-          this.store.force = force;
+        .on("reading_displayunit", (reading_displayunit) => {
+          this.store.reading_displayunit = reading_displayunit;
           this.store.graph.data = [
             {
               x: ++this.store.currentTick,
-              y: force,
+              y: reading_displayunit,
             },
-            ...this.store.graph.data.slice(0, 10),
+            ...this.store.graph.data.slice(0, 20),
           ];
         })
         .on("reading", (value) => {

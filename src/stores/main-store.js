@@ -41,7 +41,7 @@ export const useMainStore = defineStore("main-store", {
     messages: [],
 
     reading: null,
-    force: null,
+    reading_displayunit: null,
     battery: null,
     ping: null,
   }),
